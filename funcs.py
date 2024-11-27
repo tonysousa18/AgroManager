@@ -1,19 +1,11 @@
 import random 
 
 
-#REQUISITOS FUNCIONAS: Aqui, há apenas os requisitos funcionais solicitados pela empresa, da maneira que foram especificados. 
-
-
-# #RF001 
-# Cadastrar Usuário: O sistema deve permitir o cadastro de usuários (funcionários e gestores) com nome,
-#  e-mail corporativo e senha.
 
 def cadastrarUsuario(nome, email_corp, senha, cargo, lista_funcionarios):
     lista_funcionarios[email_corp] = {'Nome': nome, 'Email': email_corp, 'Senha': senha, 'Cargo': cargo}
     return lista_funcionarios
 
-# #RF002 
-# Login e Logout: O sistema deve permitir que usuários façam login e logout usando email e senha.
 def login(lista_funcionarios, email_fornecido, senha_fornecida):
     funcionario = lista_funcionarios.get(email_fornecido)
     
@@ -29,8 +21,6 @@ def logout():
     print("Você foi desconectado.\n")
     return
 
-# #RF003 
-# Gestão de Contas: O sistema deve permitir a recuperação e redefinição de senha via e-mail corporativo.
 def enviarCodigoRecuperacao(email, lista_funcionarios):
     if email not in lista_funcionarios:
         return "Email não encontrado."
@@ -54,10 +44,6 @@ def redefinirSenha(email, codigo_inserido, nova_senha, lista_funcionarios):
     else:
         return "Código de recuperação inválido ou expirado."
     
-#  RF004 
-# Cadastro de Máquinas:O sistema deve permitir o cadastro de máquinas usadas e novas, incluindo informações como nome
-#  do equipamento, condição, ano de  fabricação, número de série, fotos e vídeos
-#OBS: Por falta de conhecimento e conveniencia ja que é via console, fotos e videos nao foram inclusos 
 
 def cadastrarMaquinas(nome_maquina, condicao, ano_fabricacao, numero_serie, lista_maquinas):
     if numero_serie in lista_maquinas:
@@ -70,10 +56,6 @@ def cadastrarMaquinas(nome_maquina, condicao, ano_fabricacao, numero_serie, list
         'Numero_de_serie': numero_serie
     }
     return lista_maquinas
-
-#RF005 
-#  Gerenciamento de Manutenção: O sistema deve permitir o gerenciamento de manutenções em equipamentos, incluindo o 
-# registro de peças e custos utilizados.
 
 def registrarManutencao(numero_serie, data, pecas, custos, observacoes, lista_maquinas):
     if numero_serie not in lista_maquinas:
@@ -140,8 +122,7 @@ def visualizarManutencoes(numero_serie, lista_maquinas):
         print(f"Custos: R$ {(manutencao['Custos'])}")
         print(f"Observações: {manutencao['Observacoes']}")
 
-# RF006
-# Validar Manutenções: O sistema deve permitir ao gestor validar os relatórios de manutenção emitidos pelos funcionários.
+
 def validarManutencao(numero_serie, manutencao_idx, status, lista_maquinas):
     if numero_serie not in lista_maquinas:
         print("Erro: Máquina não encontrada.")
@@ -152,7 +133,7 @@ def validarManutencao(numero_serie, manutencao_idx, status, lista_maquinas):
         print("Erro: Manutenção não encontrada.")
         return lista_maquinas
 
-    # Atualiza o status de validação
+
     manutencoes[manutencao_idx]['Validada'] = status
     if status:
         print(f"Manutenção {manutencao_idx + 1} da máquina {numero_serie} validada com sucesso.")
@@ -161,9 +142,7 @@ def validarManutencao(numero_serie, manutencao_idx, status, lista_maquinas):
     
     return lista_maquinas
 
-#RF007
-# #  Emitir Relatório:O sistema deve permitir a emissão de relatórios preliminares e finais das
-# máquinas cadastradas.
+
 def emitirRelatorioPreliminar(numero_serie, lista_maquinas):
     if numero_serie not in lista_maquinas:
         return f"Erro: Máquina com número de série {numero_serie} não encontrada."
@@ -203,8 +182,7 @@ def emitir_relatorio_final(numero_serie, lista_maquinas):
             )
     return relatorio
 
-# RF008
-# Cadastro de Eventos: O sistema deve permitir o cadastro, abertura e fechamento de eventos corporativos.
+
 def cadastrarEvento(id_evento, nome, descricao, data, lista_eventos):
     if id_evento in lista_eventos:
         print(f"Erro: Já existe um evento com o ID {id_evento}.")
@@ -214,7 +192,7 @@ def cadastrarEvento(id_evento, nome, descricao, data, lista_eventos):
         'Nome': nome,
         'Descrição': descricao,
         'Data': data,
-        'Status': 'Aberto'  # Eventos começam como "Aberto"
+        'Status': 'Aberto'
     }
     print(f"Evento {nome} cadastrado com sucesso!")
     return lista_eventos
@@ -245,9 +223,6 @@ def exibirEventos(lista_eventos):
 
 
 
-# RF009 
-# Cadastro de Participantes: sistema deve permitir o cadastro de participantes nos eventos, registrando informações como 
-# nome, telefone e e-mail
 def cadastrarParticipante(id_evento, nome, telefone, email, lista_eventos):
     if id_evento not in lista_eventos:
         print(f"Erro: Evento com ID {id_evento} não encontrado.")
@@ -258,11 +233,9 @@ def cadastrarParticipante(id_evento, nome, telefone, email, lista_eventos):
         print(f"Erro: Não é possível adicionar participantes a um evento fechado ({evento['Nome']}).")
         return lista_eventos
 
-    # Inicializa a lista de participantes se ela não existir
     if 'Participantes' not in evento:
         evento['Participantes'] = []
 
-    # Adiciona o participante
     participante = {'Nome': nome, 'Telefone': telefone, 'Email': email}
     evento['Participantes'].append(participante)
     print(f"Participante {nome} cadastrado no evento {evento['Nome']} com sucesso!")
@@ -300,7 +273,7 @@ def criarQuiz(id_quiz, titulo, lista_quizes):
     while True:
         pergunta = input("Digite a pergunta: ")
         opcoes = []
-        for i in range(4):  # 4 opções por padrão
+        for i in range(4): 
             opcao = input(f"Digite a opção {i + 1}: ")
             opcoes.append(opcao)
 
@@ -344,9 +317,6 @@ def aplicarQuiz(id_quiz, lista_quizes):
     print(f"\nVocê acertou {acertos} de {total_perguntas} perguntas!")
 
 
-
-
-#aqui estão funções criadas apenas pro codigo, nao estão presentes no documento de requisitos
 
 def formatarFuncionarios(lista_funcionarios):
     if not lista_funcionarios:
